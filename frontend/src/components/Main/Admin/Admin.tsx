@@ -73,7 +73,10 @@ const Admin = (): JSX.Element => {
             <div className={styles.groupContent}>
               {workDays.map((workDay) => (
                 <ChoiceWorkDay
-                  isEditable={new Date(date) >= new Date(Date.now() + 86400000)}
+                  isEditable={
+                    new Date(date).setHours(0, 0, 0, 0) >
+                    new Date().setHours(0, 0, 0, 0)
+                  }
                   key={workDay.id}
                   user={workDay.user}
                   id={workDay.id}
