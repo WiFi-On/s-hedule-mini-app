@@ -1,0 +1,109 @@
+.day {
+  padding: 10px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.time {
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.geoGroup {
+  display: flex;
+  justify-content: space-around;
+  margin: 5px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.geoGroup div {
+  padding: 10px;
+  height: 100%;
+  width: 50%;
+  transition: background-color 0.3s;
+  border-left: 1px solid #ccc; /* Добавляем вертикальные границы между элементами */
+}
+
+.geoGroup div:first-child {
+  border-left: none; /* Убираем границу слева у первого элемента */
+}
+
+/* Стиль для статуса "В ожидании" */
+.pending {
+  background-color: #b0b0b0; /* Серый фон */
+  color: white;
+}
+
+/* Стиль для статуса "Отказ" */
+.rejected {
+  background-color: #dc3545; /* Красный фон */
+  color: white;
+}
+
+/* Стиль для статуса "Согласование" */
+.approved {
+  background-color: #28a745; /* Зеленый фон */
+  color: white;
+}
+
+.selected {
+  background-color: #b0b0b0; /* Зеленый фон для выбранного диапазона */
+  color: white;
+}
+
+.actions {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.submitButton {
+  padding: 10px 20px;
+  width: 40%;
+  font-size: 16px;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submitButton:hover:enabled {
+  background-color: #0056b3;
+}
+
+.deleteButton {
+  padding: 10px 20px;
+  width: 40%;
+  font-size: 16px;
+  color: white;
+  background-color: #dc3545;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.deleteButton:hover:enabled {
+  background-color: #c82333;
+}
+
+.submitButton:disabled,
+.deleteButton:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}

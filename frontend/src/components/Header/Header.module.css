@@ -1,0 +1,9 @@
+.header {
+  margin-bottom: 15px;
+}
+.header h1 {
+  margin: 0;
+  text-align: center;
+  color: var(--tg-theme-text-color);
+  font-size: 1.5rem;
+}
