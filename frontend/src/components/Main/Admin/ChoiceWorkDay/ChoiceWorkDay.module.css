@@ -45,7 +45,7 @@
 }
 
 .refusal {
-  background-color: #f44336;
+  background-color: var(--tg-theme-destructive-text-color);
   color: white;
 }
 

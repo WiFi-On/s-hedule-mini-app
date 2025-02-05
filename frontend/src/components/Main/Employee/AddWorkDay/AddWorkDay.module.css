@@ -48,7 +48,7 @@
 
 /* Стиль для статуса "Отказ" */
 .rejected {
-  background-color: #dc3545; /* Красный фон */
+  background-color: var(--tg-theme-destructive-text-color); /* Красный фон */
   color: white;
 }
 
@@ -91,7 +91,7 @@
   width: 40%;
   font-size: 16px;
   color: white;
-  background-color: #dc3545;
+  background-color: var(--tg-theme-destructive-text-color);
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -99,7 +99,7 @@
 }
 
 .deleteButton:hover:enabled {
-  background-color: #c82333;
+  background-color: var(--tg-theme-destructive-text-color);
 }
 
 .submitButton:disabled,

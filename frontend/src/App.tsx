@@ -4,6 +4,7 @@ import { useTelegram } from "./hooks/useTelegram";
 import Header from "./components/Header/Header";
 import Employee from "./components/Main/Employee/Employee";
 import Admin from "./components/Main/Admin/Admin";
+import StatusMessage from "./components/StatusMessage/StatusMessage";
 import axios from "axios";
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
       ) : (
         <h1>Вас нет в базе пользователей</h1>
       )}
+      <StatusMessage />
     </div>
   );
 }

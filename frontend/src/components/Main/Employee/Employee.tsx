@@ -1,9 +1,9 @@
 import styles from "./Employee.module.css";
 import AddWorkDay from "./AddWorkDay/AddWorkDay";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useTelegram } from "../../../hooks/useTelegram";
-import { ScheduleI, ParamsGetScheduleI } from "./interfaces";
+import { ScheduleI } from "./interfaces";
 
 // Функция для добавления дат в массив объектов
 const fillMissingDates = (inputArray: ScheduleI[]): ScheduleI[] => {

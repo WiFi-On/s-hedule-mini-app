@@ -3,6 +3,8 @@ import styles from "./AddWorkDay.module.css";
 import { AddWorkPropsI } from "./interfaces";
 import { useTelegram } from "../../../../hooks/useTelegram";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { showStatus } from "../../../../redux/statusSlise";
 
 const AddWorkDay = ({
   date,
@@ -19,6 +21,7 @@ const AddWorkDay = ({
   const [activeState, setActiveState] = useState<boolean>(false);
   const [idWorkDay, setIdWorkDay] = useState<number>(id);
   const { initData } = useTelegram();
+  const dispatch = useDispatch();
 
   const times: string[] = [
     "10:00",
@@ -118,10 +121,20 @@ const AddWorkDay = ({
         }
       );
 
-      console.log(response.data.id);
+      dispatch(
+        showStatus({
+          message: "Рабочий день успешно добавлен",
+          type: "success",
+        })
+      );
       setIdWorkDay(response.data.id);
     } catch (error) {
-      console.error("Error:", error);
+      dispatch(
+        showStatus({
+          message: "Ошибка при добавлении рабочего дня",
+          type: "error",
+        })
+      );
     }
   };
 
@@ -139,11 +152,22 @@ const AddWorkDay = ({
         }
       );
 
+      dispatch(
+        showStatus({
+          message: "Рабочий день успешно удален",
+          type: "success",
+        })
+      );
       setSelectedStart(null);
       setSelectedEnd(null);
       setIdWorkDay(-1);
     } catch (error) {
-      console.error("Error:", error);
+      dispatch(
+        showStatus({
+          message: "Ошибка при удалении рабочего дня",
+          type: "error",
+        })
+      );
     }
   };
 
@@ -165,8 +189,20 @@ const AddWorkDay = ({
           },
         }
       );
+
+      dispatch(
+        showStatus({
+          message: "Рабочий день успешно обновлен",
+          type: "success",
+        })
+      );
     } catch (error) {
-      console.error("Error:", error);
+      dispatch(
+        showStatus({
+          message: "Ошибка при редактировании рабочего дня",
+          type: "error",
+        })
+      );
     }
   };
 
