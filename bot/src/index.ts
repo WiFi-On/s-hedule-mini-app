@@ -6,9 +6,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 // Загрузка соответствующего .env файла в зависимости от NODE_ENV
-dotenv.config({
-  path: `.env.${process.env.NODE_ENV || "development"}`,
-});
+dotenv.config();
 
 const token = process.env.TG_API_KEY || "";
 const appAddress = process.env.URL_FRONTEND || "";
