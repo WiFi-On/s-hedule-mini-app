@@ -1,0 +1,10 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.noWorkDays {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+}

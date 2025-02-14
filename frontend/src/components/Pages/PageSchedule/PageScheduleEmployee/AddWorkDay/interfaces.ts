@@ -1,5 +1,5 @@
 export interface AddWorkPropsI {
-  date: Date;
+  date: Date | string | null;
   isEditable: boolean;
   startTime: string;
   endTime: string;

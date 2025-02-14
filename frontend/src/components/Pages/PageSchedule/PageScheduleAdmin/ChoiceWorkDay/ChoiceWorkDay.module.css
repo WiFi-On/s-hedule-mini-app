@@ -1,0 +1,74 @@
+.workDay {
+  display: flex;
+  gap: 2px;
+  flex-direction: column;
+  padding: 5px;
+  cursor: default;
+  text-align: center;
+  border-radius: 10px;
+  transition: background 0.5s ease-in-out; /* Плавная анимация */
+  background: var(--tg-theme-secondary-bg-color);
+  color: var(--tg-theme-text-color);
+}
+
+/* Градиенты с мягкими оттенками */
+.workDay.approved {
+  background: linear-gradient(
+    to bottom,
+    var(--tg-theme-secondary-bg-color),
+    rgba(144, 238, 144, 0.5) /* Мягкий пастельный зеленый */
+  );
+}
+
+.workDay.rejected {
+  background: linear-gradient(
+    to bottom,
+    var(--tg-theme-secondary-bg-color),
+    rgba(255, 192, 192, 0.5) /* Мягкий пастельный красный */
+  );
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.timeAndGeo {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.status {
+  margin-top: 10px;
+  font-weight: 500;
+}
+
+.editStatus {
+  display: flex;
+  justify-content: space-around;
+  margin: 10px 0 0;
+  text-align: center;
+  gap: 5px;
+}
+
+.editStatus div {
+  padding: 10px 12px;
+  border-radius: 12px;
+  width: 40%;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  font-size: 18px;
+  font-weight: 500;
+  background: var(--tg-theme-button-color);
+  color: white;
+}
+
+/* Мягкая анимация увеличения активной кнопки */
+.editStatus .active {
+  transform: scale(1.08);
+  font-weight: bold;
+}

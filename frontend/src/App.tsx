@@ -1,11 +1,19 @@
 import { useEffect, useState } from "react";
-import styles from "./App.module.css";
+import "./App.module.css";
 import { useTelegram } from "./hooks/useTelegram";
-import Header from "./components/Header/Header";
-import Employee from "./components/Main/Employee/Employee";
-import Admin from "./components/Main/Admin/Admin";
 import StatusMessage from "./components/StatusMessage/StatusMessage";
 import axios from "axios";
+import MenuNav from "./components/MenuNav/MenuNav";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import PageScheduleEmployee from "./components/Pages/PageSchedule/PageScheduleEmployee/PageScheduleEmployee";
+import PageScheduleAdmin from "./components/Pages/PageSchedule/PageScheduleAdmin/PageScheduleAdmin";
+import PageFines from "./components/Pages/PageFines/PageFines";
+import PageMoney from "./components/Pages/PageMoney/PageMoney";
+import PageProfile from "./components/Pages/PageProfile/PageProfile";
+import PageReports from "./components/Pages/PageReports/PageReports";
+
+import Loader from "./components/Loader/Loader";
 
 function App() {
   const { tg, initData } = useTelegram();
@@ -33,24 +41,40 @@ function App() {
     checkIsAdmin();
   }, [initData, tg]);
 
-  if (!initData) {
-    return <h1>Адрес предназначен для работы с Telegram mini app</h1>;
-  }
-
   return (
-    <div className={styles.main}>
+    <>
       {loading ? (
-        <h1></h1>
-      ) : user !== null ? (
-        <>
-          <Header />
-          {user === "admin" ? <Admin /> : <Employee />}
-        </>
+        <Loader />
       ) : (
-        <h1>Вас нет в базе пользователей</h1>
+        <Router>
+          <StatusMessage />
+          {user !== null ? (
+            <div className="app-container">
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    user === "admin" ? (
+                      <PageScheduleAdmin />
+                    ) : (
+                      <PageScheduleEmployee />
+                    )
+                  }
+                />
+                <Route path="/profile" element={<PageProfile />} />
+                <Route path="/fines" element={<PageFines />} />
+                <Route path="/reports" element={<PageReports />} />
+                <Route path="/money" element={<PageMoney />} />
+              </Routes>
+              <MenuNav />
+            </div>
+          ) : (
+            <h1>Вас нет в базе пользователей</h1>
+          )}
+          <StatusMessage />
+        </Router>
       )}
-      <StatusMessage />
-    </div>
+    </>
   );
 }
 

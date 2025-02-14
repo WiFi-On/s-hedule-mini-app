@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import styles from "./ChoiceWorkDay.module.css";
 import workDayProps from "./ChoiceWorkDay.interface";
 import axios from "axios";
-import { useTelegram } from "../../../../hooks/useTelegram";
-import { start } from "repl";
+import { useTelegram } from "../../../../../hooks/useTelegram";
 
 const ChoiceWorkDay = ({
   id,
@@ -44,7 +43,15 @@ const ChoiceWorkDay = ({
   };
 
   return (
-    <div className={styles.workDay}>
+    <div
+      className={`${styles.workDay} ${
+        statusState === "Согласовано"
+          ? styles.approved
+          : statusState === "Отказ"
+          ? styles.rejected
+          : ""
+      }`}
+    >
       {/* Информация о рабочем дне */}
       <div className={styles.info}>
         <div className={styles.fio}>
@@ -58,9 +65,6 @@ const ChoiceWorkDay = ({
             {office ? "🏢 Офис" : "🏡 Удаленно"}
           </div>
         </div>
-        <div className={styles.status}>
-          Статус: <span>{statusState}</span>
-        </div>
       </div>
 
       {/* Панель для редактирования статуса */}
@@ -70,17 +74,17 @@ const ChoiceWorkDay = ({
             className={`${styles.confirm} ${
               statusState === "Согласовано" ? styles.active : ""
             }`}
-            onClick={() => updateStatus("Согласовано")} // Устанавливаем статус "Подтверждено"
+            onClick={() => updateStatus("Согласовано")}
           >
-            Подтвердить
+            Подтверждено
           </div>
           <div
             className={`${styles.refusal} ${
               statusState === "Отказ" ? styles.active : ""
             }`}
-            onClick={() => updateStatus("Отказ")} // Устанавливаем статус "Отказано"
+            onClick={() => updateStatus("Отказ")}
           >
-            Отказать
+            Отказано
           </div>
         </div>
       )}

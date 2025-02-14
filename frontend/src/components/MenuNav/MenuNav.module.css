@@ -1,0 +1,36 @@
+.bottomNav {
+  position: fixed;
+  bottom: 1%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  background: var(--tg-theme-secondary-bg-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  gap: 10px;
+  -webkit-tap-highlight-color: transparent; /* Убирает серое выделение */
+  outline: none; /* Убирает фокусное выделение */
+}
+
+.navItem {
+  background: none;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+.navItem svg {
+  width: 24px;
+  height: 24px;
+  fill: #5f6368;
+  transition: fill 0.3s ease;
+}
+
+.active svg {
+  fill: var(--tg-theme-button-color);
+}

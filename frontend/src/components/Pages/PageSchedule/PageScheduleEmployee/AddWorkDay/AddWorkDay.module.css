@@ -1,0 +1,105 @@
+.main {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.day {
+  padding: 10px;
+  text-align: center;
+  border-radius: 10px;
+  background-color: var(--tg-theme-secondary-bg-color);
+  transition: background-color 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.arrow {
+  fill: var(--tg-theme-text-color);
+  display: inline-block;
+  transform-origin: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.times {
+  display: flex;
+  margin-top: 5px;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 5px;
+}
+.time {
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  width: 90%;
+  background-color: var(--tg-theme-secondary-bg-color);
+  transition: background-color 0.3s;
+}
+.selected {
+  background-color: #b0b0b0;
+  color: white;
+}
+.location {
+  display: flex;
+  justify-content: center;
+
+  gap: 5px;
+  width: 100%;
+  text-align: center;
+  border-radius: 10px;
+  transition: background-color 0.3s;
+}
+
+.location div {
+  padding: 10px;
+  width: 40%;
+  border-radius: 10px;
+  transition: background-color 0.3s;
+}
+
+.default {
+  background: var(--tg-theme-secondary-bg-color);
+  color: var(--tg-theme-text-color);
+}
+
+/* Стиль для статуса "В ожидании" */
+.pending {
+  background: #ffa07a;
+  color: white;
+}
+
+/* Стиль для статуса "Отказ" */
+.rejected {
+  background-color: #ff6b6b; /* Светло-красный фон */
+  color: white;
+}
+
+/* Стиль для статуса "Согласование" */
+.approved {
+  background-color: #28a745; /* Зеленый фон */
+  color: white;
+}
+
+.selected {
+  background-color: #b0b0b0;
+  color: white;
+}
+
+.save {
+  border: 0;
+  padding: 10px;
+  width: 100%;
+  color: white;
+  border-radius: 10px;
+  background: var(--tg-theme-button-color);
+  font-size: 16px;
+  font-weight: 500;
+}
