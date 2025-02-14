@@ -160,10 +160,18 @@ const AddWorkDay: FC<AddWorkPropsI> = ({
 
   // Обработчик отправки данных (создание нового рабочего дня)
   const handleSubmit = async (): Promise<void> => {
+    if (!(date instanceof Date)) return; // Проверяем, что date - это объект Date
+
+    const formattedDate = new Date(
+      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+    )
+      .toISOString()
+      .split("T")[0];
+
     const payload = {
       startTime: selectedStart,
       endTime: selectedEnd,
-      date: date instanceof Date ? date.toISOString().split("T")[0] : date,
+      date: formattedDate, // Используем нормализованную дату
       officeWork: workOffice,
     };
 
@@ -175,12 +183,12 @@ const AddWorkDay: FC<AddWorkPropsI> = ({
       );
       dispatch(
         showStatus({
-          message: "Рабочий день успешно добавлен",
+          message: "Рабочий день успешно добавлен",
           type: "success",
         })
       );
-      // Обновляем локальный id рабочего дня на полученный из ответа
-      setWorkDayId(response.data.id);
+      setWorkDayId(response.data.id); // Обновляем ID рабочего дня
+      setStatusWork(response.data.status); // Обновляем статус рабочего дня
     } catch (error) {
       dispatch(
         showStatus({
@@ -338,11 +346,11 @@ const AddWorkDay: FC<AddWorkPropsI> = ({
               <div
                 className={
                   workOffice
-                    ? status === "В ожидании"
+                    ? statusWork === "В ожидании"
                       ? styles.pending
-                      : status === "Отказ"
+                      : statusWork === "Отказ"
                       ? styles.rejected
-                      : status === "Согласовано"
+                      : statusWork === "Согласовано"
                       ? styles.approved
                       : styles.selected
                     : styles.default
@@ -354,11 +362,11 @@ const AddWorkDay: FC<AddWorkPropsI> = ({
               <div
                 className={
                   !workOffice
-                    ? status === "В ожидании"
+                    ? statusWork === "В ожидании"
                       ? styles.pending
-                      : status === "Отказ"
+                      : statusWork === "Отказ"
                       ? styles.rejected
-                      : status === "Согласовано"
+                      : statusWork === "Согласовано"
                       ? styles.approved
                       : styles.selected
                     : styles.default

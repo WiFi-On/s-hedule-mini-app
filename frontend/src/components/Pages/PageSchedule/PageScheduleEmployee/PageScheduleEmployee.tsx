@@ -27,7 +27,6 @@ function PageScheduleEmployee() {
   // Преобразуем дату в тип Date, если это не диапазон
   const selectedDate = Array.isArray(date) ? date[0] : date; // Берем первую дату из диапазона, если это массив
   const handleDateChange = (newDate: Value) => {
-    console.log("newDate", newDate);
     setDate(newDate); // Передаем новую дату или диапазон дат
   };
 
@@ -36,7 +35,11 @@ function PageScheduleEmployee() {
       try {
         const formattedDate = selectedDate
           ? new Date(
-              selectedDate.getTime() - selectedDate.getTimezoneOffset() * 60000
+              Date.UTC(
+                selectedDate.getFullYear(),
+                selectedDate.getMonth(),
+                selectedDate.getDate()
+              )
             )
               .toISOString()
               .split("T")[0]
