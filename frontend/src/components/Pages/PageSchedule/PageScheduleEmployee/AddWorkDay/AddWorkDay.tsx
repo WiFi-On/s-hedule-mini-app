@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, FC } from "react";
+import React, { useState, useEffect, FC } from "react";
 import styles from "./AddWorkDay.module.css";
 import { AddWorkPropsI } from "./interfaces";
 import { useTelegram } from "../../../../../hooks/useTelegram";
@@ -51,106 +51,97 @@ const AddWorkDay: FC<AddWorkPropsI> = ({
     setWorkOffice(isOffice);
     setWorkDayId(id);
     setStatusWork(status);
-  }, [startTime, endTime, isOffice, id, status]);
+  }, [startTime, endTime, isOffice, id, status, date]);
 
   const { initData } = useTelegram();
   const dispatch = useDispatch();
 
   // Обработчик для переключения видимости деталей (развернуто/свернуто)
-  const toggleExpanded = useCallback(() => {
+  const toggleExpanded = () => {
     setIsExpanded((prev) => !prev);
-  }, []);
+  };
 
   // Обработчик клика по времени
-  const handleTimeClick = useCallback(
-    (time: string) => {
-      if (!isEditable) return;
+  const handleTimeClick = (time: string) => {
+    if (!isEditable) return;
 
-      // Если ни время начала, ни конца не выбраны – выбираем время начала
-      if (!selectedStart && !selectedEnd) {
-        setSelectedStart(time);
-        return;
-      }
-
-      // Если выбрано только время начала
-      if (selectedStart && !selectedEnd) {
-        // Если повторный клик по тому же времени – сбрасываем выбор
-        if (selectedStart === time) {
-          setSelectedStart(null);
-          return;
-        }
-        const startIndex = times.indexOf(selectedStart);
-        const clickedIndex = times.indexOf(time);
-        // Проверяем, что разница между выбранными временами достаточная
-        if (Math.abs(clickedIndex - startIndex) >= MIN_TIME_DIFF) {
-          // Если время клика позже выбранного – устанавливаем его как конец
-          if (startIndex < clickedIndex) {
-            setSelectedEnd(time);
-          } else {
-            // Если время клика раньше – меняем местами
-            setSelectedEnd(selectedStart);
-            setSelectedStart(time);
-          }
-        } else {
-          dispatch(
-            showStatus({
-              message: "Диапазон должен быть минимум 4 часа.",
-              type: "error",
-            })
-          );
-        }
-        return;
-      }
-
-      // Если уже выбраны и время начала, и конца – начинаем выбор заново
+    // Если ни время начала, ни конца не выбраны – выбираем время начала
+    if (!selectedStart && !selectedEnd) {
       setSelectedStart(time);
-      setSelectedEnd(null);
-    },
-    [dispatch, isEditable, selectedStart, selectedEnd]
-  );
+      return;
+    }
+
+    // Если выбрано только время начала
+    if (selectedStart && !selectedEnd) {
+      // Если повторный клик по тому же времени – сбрасываем выбор
+      if (selectedStart === time) {
+        setSelectedStart(null);
+        return;
+      }
+      const startIndex = times.indexOf(selectedStart);
+      const clickedIndex = times.indexOf(time);
+      // Проверяем, что разница между выбранными временами достаточная
+      if (Math.abs(clickedIndex - startIndex) >= MIN_TIME_DIFF) {
+        // Если время клика позже выбранного – устанавливаем его как конец
+        if (startIndex < clickedIndex) {
+          setSelectedEnd(time);
+        } else {
+          // Если время клика раньше – меняем местами
+          setSelectedEnd(selectedStart);
+          setSelectedStart(time);
+        }
+      } else {
+        dispatch(
+          showStatus({
+            message: "Диапазон должен быть минимум 4 часа.",
+            type: "error",
+          })
+        );
+      }
+      return;
+    }
+
+    // Если уже выбраны и время начала, и конца – начинаем выбор заново
+    setSelectedStart(time);
+    setSelectedEnd(null);
+  };
 
   // Проверка, находится ли время внутри выбранного диапазона
-  const isInRange = useCallback(
-    (time: string): boolean => {
-      if (!selectedStart || !selectedEnd) return false;
-      const startIndex = times.indexOf(selectedStart);
-      const endIndex = times.indexOf(selectedEnd);
-      const currentIndex = times.indexOf(time);
-      const [minIndex, maxIndex] = [
-        Math.min(startIndex, endIndex),
-        Math.max(startIndex, endIndex),
-      ];
-      return currentIndex >= minIndex && currentIndex <= maxIndex;
-    },
-    [selectedStart, selectedEnd]
-  );
+  const isInRange = (time: string): boolean => {
+    if (!selectedStart || !selectedEnd) return false;
+    const startIndex = times.indexOf(selectedStart);
+    const endIndex = times.indexOf(selectedEnd);
+    const currentIndex = times.indexOf(time);
+    const [minIndex, maxIndex] = [
+      Math.min(startIndex, endIndex),
+      Math.max(startIndex, endIndex),
+    ];
+    return currentIndex >= minIndex && currentIndex <= maxIndex;
+  };
 
   // Функция для вычисления класса для временного блока с учётом статуса
-  const getTimeClass = useCallback(
-    (time: string): string => {
-      const isSelected =
-        time === selectedStart || time === selectedEnd || isInRange(time);
-      let timeClass = styles.time;
-      if (isSelected) {
-        // Если выбран, то меняем стиль в зависимости от статуса
-        switch (statusWork) {
-          case "В ожидании":
-            timeClass += ` ${styles.pending}`;
-            break;
-          case "Отказ":
-            timeClass += ` ${styles.rejected}`;
-            break;
-          case "Согласовано":
-            timeClass += ` ${styles.approved}`;
-            break;
-          default:
-            timeClass += ` ${styles.selected}`;
-        }
+  const getTimeClass = (time: string): string => {
+    const isSelected =
+      time === selectedStart || time === selectedEnd || isInRange(time);
+    let timeClass = styles.time;
+    if (isSelected) {
+      // Если выбран, то меняем стиль в зависимости от статуса
+      switch (statusWork) {
+        case "В ожидании":
+          timeClass += ` ${styles.pending}`;
+          break;
+        case "Отказ":
+          timeClass += ` ${styles.rejected}`;
+          break;
+        case "Согласовано":
+          timeClass += ` ${styles.approved}`;
+          break;
+        default:
+          timeClass += ` ${styles.selected}`;
       }
-      return timeClass;
-    },
-    [selectedStart, selectedEnd, isInRange, statusWork]
-  );
+    }
+    return timeClass;
+  };
 
   // Заголовки для axios-запросов (используются везде, чтобы не дублировать)
   const apiHeaders = {
@@ -232,8 +223,8 @@ const AddWorkDay: FC<AddWorkPropsI> = ({
       await axios.delete(
         `${process.env.REACT_APP_API_URL}/api/v1/schedule/delete/WorkDay`,
         {
-          data: { id: workDayId },
           headers: apiHeaders,
+          params: { id: workDayId },
         }
       );
       dispatch(
